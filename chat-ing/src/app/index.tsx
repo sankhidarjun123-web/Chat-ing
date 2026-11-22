@@ -1,13 +1,10 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ThemedView } from '@/components/themed-view';
-import { View, Text } from 'react-native';
-
+import { View, Text, Image } from 'react-native';
+import { chatHome } from '@/data/images';
 
 export default function HomeScreen() {
   return (
-    <ThemedView>
-      <SafeAreaView>
-      </SafeAreaView>
-    </ThemedView>
+    <View className="flex-1 w-full h-screen">
+      <Image source={chatHome} className="w-full h-full"/>
+    </View>
   );
 }
