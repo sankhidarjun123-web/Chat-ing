@@ -105,11 +105,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setTheme(mode === "light" ? "dark" : "light");
     }
 
-
-    useEffect(() => {
-        setTheme(mode);
-    }, [mode]);
-
     return <ThemeContext.Provider value={{ theme: colors[mode], mode, toggleTheme, isThemeLoaded }}>
         {children}
     </ThemeContext.Provider>
@@ -118,9 +113,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 
 /*Custom Hook to use Theme Context*/ 
-
 export const useTheme = () => {
+    const context = useContext(ThemeContext);
 
-    return useContext(ThemeContext);
-}
+    if (!context) {
+        throw new Error("useTheme must be used within a ThemeProvider");
+    }
+
+    return context;
+};
 
