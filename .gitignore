@@ -1,0 +1,93 @@
+
+# ==========================================
+# Environment variables and secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Secret and credential files
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+credentials.json
+service-account*.json
+secrets.*
+secrets/
+certificates/
+
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+**/node_modules/
+
+# ==========================================
+# Build outputs
+# ==========================================
+dist/
+build/
+out/
+.next/
+.expo/
+.expo-shared/
+web-build/
+
+# ==========================================
+# React Native / Expo
+# ==========================================
+chat-ing/.expo/
+chat-ing/android/.gradle/
+chat-ing/android/app/build/
+chat-ing/ios/Pods/
+chat-ing/ios/build/
+
+# ==========================================
+# Backend
+# ==========================================
+backend/dist/
+backend/build/
+backend/coverage/
+backend/logs/
+
+# ==========================================
+# Logs and debugging
+# ==========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+logs/
+
+# ==========================================
+# OS generated files
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# IDE and editor configurations
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ==========================================
+# Testing and coverage
+# ==========================================
+coverage/
+.nyc_output/
+
+# ==========================================
+# Temporary files
+# ==========================================
+tmp/
+temp/
+*.tmp
+*.bak
