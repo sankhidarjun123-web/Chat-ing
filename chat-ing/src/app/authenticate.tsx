@@ -9,6 +9,8 @@ import CountryPicker, {
     CountryCode,
 } from "react-native-country-picker-modal";
 import { chatIcon } from "@/data/images";
+import { getExampleNumber, CountryCode as PhoneCountryCode } from "libphonenumber-js";
+import examples from "libphonenumber-js/mobile/examples";
 
 
 export default function AuthenticateScreen() {
@@ -30,6 +32,10 @@ export default function AuthenticateScreen() {
         setCallingCode(country.callingCode[0]);
     };
 
+    const example = getExampleNumber(countryCode as PhoneCountryCode, examples);
+
+    const limit = example?.nationalNumber.length;
+
     /*The full final phone number of the user to send otp onto*/
     const fullPhoneNumber = `+${callingCode}${ph}`;
     return (
@@ -50,58 +56,82 @@ export default function AuthenticateScreen() {
                     <Image source={chatIcon} style={{ width: 100, height: 100, borderRadius: 30 }} resizeMode="contain" />
                 </View>
 
-                {/*Phone number input*/}
-                <Text
-                    className="text-4xl font-bold w-full text-start"
-                    style={{ color: theme.textPrimary }}
-                >
-                    Phone Number
-                </Text>
-
-                <View className="flex gap-2 items-center flex-row">
-
-                    {/*Country Code informations*/}
-                    <View style={{
-                        backgroundColor: theme.background,
-                        borderWidth: 3,
-                        borderColor: theme.border,
-                        borderRadius: 5,
-                        padding: 5,
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 2
-                    }}>
-                        <Text>
-                            {callingCode && callingCode.length > 0 ? `+${callingCode}` : ""}
+                {sentOtp ?
+                    <>
+                        <Text className="text-4xl font-bold text-start w-full">
+                            Enter OTP
                         </Text>
 
-                        <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withEmoji
-                            withCallingCode
-                            onSelect={onSelect}
+                        {/*OTP Input*/}
+                        <Input value={otp}
+                            onChangeText={(text) => setOtp(text)}
+                            placeholder="Enter 6 digit OTP send to your device"
+                            keyboardType="numeric"
+                            limit={6}
+                            textStyle={{
+                                textAlign: "center"
+                            }}
                         />
-                    </View>
 
-                    {/*Main phone number*/}
-                    <Input
-                        value={ph}
-                        onChangeText={(text: string) => setPh(text)}
-                        placeholder="Enter your phone number"
-                        keyboardType="phone-pad"
-                        componentStyle={{
-                            width: "auto",
-                            flex: 1
-                        }}
-                    />
-                </View>
+                        <Button
+                            title="Verify"
+                        />
 
-                <Button title="Get OTP"
-                    onPress={() => setSendOtp(true)}
-                />
+                    </>
+                    : <>
+                        {/*Phone number input*/}
+                        <Text
+                            className="text-4xl font-bold w-full text-start"
+                            style={{ color: theme.textPrimary }}
+                        >
+                            Phone Number
+                        </Text>
+
+                        <View className="flex gap-2 items-center flex-row">
+
+                            {/*Country Code informations*/}
+                            <View style={{
+                                backgroundColor: theme.background,
+                                borderWidth: 3,
+                                borderColor: theme.border,
+                                borderRadius: 5,
+                                padding: 5,
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 2
+                            }}>
+                                <Text>
+                                    {callingCode && callingCode.length > 0 ? `+${callingCode}` : ""}
+                                </Text>
+
+                                <CountryPicker
+                                    countryCode={countryCode}
+                                    withFilter
+                                    withFlag
+                                    withEmoji
+                                    withCallingCode
+                                    onSelect={onSelect}
+                                />
+                            </View>
+
+                            {/*Main phone number*/}
+                            <Input
+                                value={ph}
+                                onChangeText={(text: string) => setPh(text)}
+                                placeholder="Enter your phone number"
+                                keyboardType="phone-pad"
+                                componentStyle={{
+                                    width: "auto",
+                                    flex: 1
+                                }}
+                                limit={limit}
+                            />
+                        </View>
+
+                        <Button title="Get OTP"
+                            onPress={() => setSendOtp(true)}
+                        /></>}
             </View>
         </SafeAreaView>
     );
